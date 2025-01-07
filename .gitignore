@@ -401,3 +401,5 @@ FodyWeavers.xsd
 
 
 venv/
+data/
+.ipynb_checkpoint/
