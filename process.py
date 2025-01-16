@@ -40,13 +40,16 @@ def load_calendar(input_path: Path) -> pd.DataFrame:
 
 
 def load_prices(input_path: Path) -> pd.DataFrame:
+    """ Loads prices for every item """
     prices_dtypes = {"store_id": "category", "item_id": "category", "wm_yr_wk": np.uint16, "sell_price": np.float32}
     logger.debug("Begin Loading Price Data...")
     prices = pd.read_csv(input_path / "sell_prices.csv", dtype=prices_dtypes)
     return prices
 
 
-def load_sales(input_path: Path, prices: pd.DataFrame) -> pd.DataFrame:
+def load_sales(input_path: Path, prices: pd.DataFrame, filename: str = "sales_train_evaluation.csv") -> pd.DataFrame:
+    """ Load Training & validation data """
+    
     sales_dtypes = {
         "id": "category",
         "item_id": prices.item_id.dtype,
@@ -58,7 +61,7 @@ def load_sales(input_path: Path, prices: pd.DataFrame) -> pd.DataFrame:
     }
     logger.debug("Begin Loading Sales Data...")
     sales = pd.read_csv(
-        input_path / "sales_train_evaluation.csv",
+        input_path / filename,
         dtype=sales_dtypes,
     )
     sales["id"] = pd.Categorical(
@@ -165,7 +168,7 @@ def reduce_mem_usage(df: pd.DataFrame, verbose: bool=True) -> pd.DataFrame:
                 end_mem, 100 * (start_mem - end_mem) / start_mem
             )
         )
-
+        
     return df
 
 
