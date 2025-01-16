@@ -4,3 +4,6 @@ isort==5.13.2
 jupyter==1.1.1
 loguru==0.7.2
 ipykernel==6.4.1
+numpy==1.26.4
+jupyter_black=0.4.0
+category_encoders==2.7.0
