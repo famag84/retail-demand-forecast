@@ -7,3 +7,4 @@ ipykernel==6.4.1
 numpy==1.26.4
 jupyter_black=0.4.0
 category_encoders==2.7.0
+papermill==2.6.0
