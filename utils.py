@@ -43,8 +43,8 @@ def compute_metrics(actual, forecast, verbose=False):
 def prepare_datasets(data: pd.DataFrame) -> pd.DataFrame:
     df = data.copy()
     df = df.sort_values(by=["item_id", "store_id", "date"])
-    selected_lags = list(range(15, 28))  # [7, 14, 28]
-    average_windows = [7, 14, 28]
+    selected_lags = list(range(20, 28))  # [7, 14, 28]
+    average_windows = list(range(7, 28)) # [7, 14, 28]
 
     for lag in selected_lags:
         df[f"sales_lag_{lag}"] = df.groupby(["item_id", "store_id"], observed=False)["sales"].shift(lag).fillna(0)
