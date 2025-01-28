@@ -1,3 +1,28 @@
+# How To Run The Solution: 
+
+The solution has been designed to work seamlessly with Papermill, allowing you to train multiple models and generate a single submission. 
+Follow the steps below:
+
+
+1. Train the Models
+
+Run all cells in the following notebook:
+
+    11_TrainMultipleModels.ipynb
+
+This notebook automatically calls the 01_ModelTraining.ipynb notebook with a predefined set of parameters to train multiple models.
+
+
+2. Create a Submission
+
+Run all cells in the following notebook:
+
+    12_MyNaiveSolution.ipynb
+
+This notebook consolidates all predictions from the trained models and generates a single submission file.
+
+
+
 # Data Science Case Study: Demand Forecasting
 Demand forecasting is an essential element of Supply Chain planning and inventory optimization.
 
