@@ -27,14 +27,14 @@ def compute_metrics(actual, forecast, verbose=False):
     metrics = dict(
         mae=mean_absolute_error(actual, forecast),
         rmse=root_mean_squared_error(actual, forecast),
-        mape=np.mean(np.abs((actual - forecast) / actual)) * 100,
+        # mape=np.mean(np.abs((actual - forecast) / actual)) * 100,
         smape=100 / len(actual) * np.sum(2 * np.abs(actual - forecast) / (np.abs(actual) + np.abs(forecast))),
         r2=r2_score(actual, forecast),
     )
     if verbose:
         print(f"Mean Absolute Error (MAE): {metrics['mae']:2.2f}")
         print(f"Root Mean Squared Error (RMSE): {metrics['rmse']:2.2f}")
-        print(f"Mean Absolute Percentage Error (MAPE): {metrics['mape']}%")
+        # print(f"Mean Absolute Percentage Error (MAPE): {metrics['mape']}%")
         print(f"Symmetric Mean Absolute Percentage Error (sMAPE): {metrics['smape']:2.2f}%")
         print(f"R-squared: {metrics['r2']:2.2f}")
     return metrics
@@ -43,17 +43,17 @@ def compute_metrics(actual, forecast, verbose=False):
 def prepare_datasets(data: pd.DataFrame) -> pd.DataFrame:
     df = data.copy()
     df = df.sort_values(by=["item_id", "store_id", "date"])
-    selected_lags = list(range(7, 20))  # [7, 14, 28]
+    selected_lags = list(range(15, 28))  # [7, 14, 28]
     average_windows = [7, 14, 28]
 
     for lag in selected_lags:
         df[f"sales_lag_{lag}"] = df.groupby(["item_id", "store_id"], observed=False)["sales"].shift(lag).fillna(0)
 
     for w in average_windows:
-        df[f"rolling_mean_{lag}"] = df.groupby(["item_id", "store_id"], observed=False)["sales"].transform(
+        df[f"rolling_mean_{w}"] = df.groupby(["item_id", "store_id"], observed=False)["sales"].transform(
             lambda x: x.rolling(window=w).mean()
         )
-        df[f"rolling_std_{lag}"] = df.groupby(["item_id", "store_id"], observed=False)["sales"].transform(
+        df[f"rolling_std_{w}"] = df.groupby(["item_id", "store_id"], observed=False)["sales"].transform(
             lambda x: x.rolling(window=w).std()
         )
 
